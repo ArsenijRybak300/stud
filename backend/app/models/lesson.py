@@ -8,6 +8,7 @@ from sqlalchemy import (
     DateTime,
     Enum as SqlEnum,
     ForeignKey,
+    Index,
     String,
     Text,
     Time,
@@ -29,6 +30,8 @@ class Lesson(Base):
     __table_args__ = (
         CheckConstraint("weekday >= 0 AND weekday <= 6", name="ck_lessons_weekday"),
         CheckConstraint("end_time > start_time", name="ck_lessons_time_order"),
+        Index("ix_lessons_group_semester", "group_id", "semester_id"),
+        Index("ix_lessons_created_at", "created_at"),
     )
 
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
