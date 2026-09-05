@@ -34,8 +34,13 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
         if subject is None:
             raise credentials_error
         user_id = int(subject)
-    except (jwt.InvalidTokenError, ValueError, TypeError):
+    except jwt.InvalidTokenError:
         raise credentials_error
+    except (ValueError, TypeError) as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f"Ошибка разбора токена: {e}",
+        ) from e
 
     user = db.get(User, user_id)
     if user is None or not user.is_active:
