@@ -1,0 +1,5 @@
+:root { font-family: "Segoe UI", Arial, sans-serif; color: #1e2a33; background: #eef1f3; }
+* { box-sizing: border-box; }
+html, body, #root { width: 100%; min-width: 320px; height: 100%; margin: 0; }
+body { overflow: hidden; }
+a { color: inherit; text-decoration: none; }
